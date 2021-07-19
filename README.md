@@ -22,6 +22,10 @@ trajplotlib.set_equal_axis(ax, xlims, ylims, zlims)
 
 # plot trajectory
 ax.plot(xs, ys, zs)   # here, xs, ys, zs are the coordinates to be plotted
+# labels
+ax.set_xlabel('X')
+ax.set_ylabel('Y')
+ax.set_zlabel('Z')
 plt.show()
 ```
 
