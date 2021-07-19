@@ -25,6 +25,8 @@ ax.plot(xs, ys, zs)   # here, xs, ys, zs are the coordinates to be plotted
 plt.show()
 ```
 
+which generates the following: 
+
 <p align="center">
   <img src="./examples/plot3d_example.png" width="550" title="hover text">
 </p>
