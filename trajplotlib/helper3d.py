@@ -23,4 +23,35 @@ def set_equal_axis(ax, xlims, ylims, zlims):
     ax.set_zlim(mid_z - max_range, mid_z + max_range)
     return
 
+
+def get_sphere_coordinates(radius, center=None):
+	"""Get x,y,z coordinates for sphere
+
+	Args:
+		radius (float): radius
+		center (list): x,y,z coordinates of center, if None set to [0.0, 0.0, 0.0]
+	"""
+	# check if center is provided
+	if center is None:
+		center = [0.0, 0.0, 0.0]
+	# construct reference sphere
+	u, v = np.mgrid[0:2*np.pi:20j, 0:np.pi:10j]
+	x_sphere = center[0] + r0*np.cos(u)*np.sin(v)
+	y_sphere = center[1] + r0*np.sin(u)*np.sin(v)
+	z_sphere = center[2] + r0*np.cos(v)
+	return x_sphere, y_sphere, z_sphere
+
+
+def plot_sphere_wireframe(ax, radius, center=None, color="k", linewidth=0.5):
+	"""Plot sphere wireframe
     
+    Args:
+        ax (Axes3DSubplot): matplotlib 3D axis, created by `ax = fig.add_subplot(projection='3d')`
+        radius (float): radius
+		center (list): x,y,z coordinates of center, if None set to [0.0, 0.0, 0.0]
+		color (str): color
+		linewidth (float): linewidth
+    """
+    x_sphere, y_sphere, z_sphere = get_sphere_coordinates(radius, center)
+	ax.plot_wireframe(x_sphere, y_sphere, z_sphere, color=color, linewidth=linewidth)
+	return
