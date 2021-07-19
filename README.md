@@ -19,6 +19,10 @@ xlims = [-800.0, 800.0]
 ylims = [-800.0, 800.0]
 zlims = [-250.0, 250.0]
 trajplotlib.set_equal_axis(ax, xlims, ylims, zlims)
+
+# plot trajectory
+ax.plot(xs, ys, zs)   # here, xs, ys, zs are the coordinates to be plotted
+plt.show()
 ```
 
 <p align="center">
