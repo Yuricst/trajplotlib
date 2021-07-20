@@ -13,7 +13,7 @@ import trajplotlib
 # compute/load data for xs, ys, zs
 
 # create plot
-trajplotlib.quickplot3(xs,ys,zs, r0=184.0)
+ax = trajplotlib.quickplot3(xs,ys,zs, r0=184.0)
 plt.show()
 ```
 
@@ -24,3 +24,12 @@ This generates the following:
 <p align="center">
   <img src="./examples/plot3d_example.png" width="550" title="hover text">
 </p>
+
+The above function returns `ax`, which is an `Axes3DSubplot` object. As such, the plot may be modified or more elements may be appended just as one would do with regular `matplotlib`
+
+```python
+ax.set_xlabel('x, km')
+ax.set_ylabel('y, km')
+ax.set_zlabel('z, km')
+ax.set_title("My trajectory")
+```
