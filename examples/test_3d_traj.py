@@ -17,5 +17,14 @@ if __name__=="__main__":
 	zs = data[:, 2]
 
 	# create plot
-	trajplotlib.quickplot3(xs,ys,zs, r0=180.0)
+	ax = trajplotlib.quickplot3(xs,ys,zs, r0=184.0)
+
+	# labels
+	ax.set_xlabel('x, km')
+	ax.set_ylabel('y, km')
+	ax.set_zlabel('z, km')
+	ax.set_title("My trajectory")
+
 	plt.show()
+
+	print(type(ax))

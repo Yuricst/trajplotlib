@@ -85,10 +85,6 @@ def quickplot3(xs, ys, zs, r0: float=None, ax=None, n_figsize=5, lw_traj=0.75, c
         ylims = [min(ys), max(ys)]
         zlims = [min(zs), max(zs)]
         set_equal_axis(ax, xlims, ylims, zlims)
-        # labels
-        ax.set_xlabel('x, km')
-        ax.set_ylabel('y, km')
-        ax.set_zlabel('z, km')
     # plot trajectory
     ax.plot(xs, ys, zs, linewidth=lw_traj, c=c_traj)
     ax.scatter(xs[0], ys[0], zs[0], marker="x", c="r")
