@@ -3,6 +3,8 @@
 """
 
 import numpy as np
+import matplotlib.pyplot as plt
+
 
 def set_equal_axis(ax, xlims, ylims, zlims):
     """Helper function to set equal axis
@@ -57,3 +59,41 @@ def plot_sphere_wireframe(ax, radius, center=None, color="k", linewidth=0.5):
     x_sphere, y_sphere, z_sphere = get_sphere_coordinates(radius, center)
     ax.plot_wireframe(x_sphere, y_sphere, z_sphere, color=color, linewidth=linewidth)
     return
+
+
+def quickplot3(xs, ys, zs, r0: float=None, ax=None, n_figsize=5, lw_traj=0.75, c_traj="navy"):
+    """Plot trajectory around body
+    
+    Args:
+        xs (ndarray): x-coordinates
+        ys (ndarray): y-coordinates
+        zs (ndarray): z-coordinates
+        r0 (float): radius for center sphere, None if no sphere should be plotted
+        ax (Axes3DSubplot): matplotlib 3D axis, created by `ax = fig.add_subplot(projection='3d')`. If set to None, new set of axis is created. 
+        n_figsize (int): fig_size is set to (n_figsize, n_figsize)
+        lw_traj (float): linewidth for trajectory
+        c_traj (str): color for trajectory
+    """
+    if ax is None:
+        fig = plt.figure(figsize=(n_figsize,n_figsize))
+        ax = fig.add_subplot(projection='3d')
+        # reference sphere around asteroid
+        if r0 is not None:
+            plot_sphere_wireframe(ax, r0, center=[0.0, 0.0, 0.0], color="k", linewidth=0.5)
+        # equal size grid
+        xlims = [min(xs), max(xs)]
+        ylims = [min(ys), max(ys)]
+        zlims = [min(zs), max(zs)]
+        set_equal_axis(ax, xlims, ylims, zlims)
+        # labels
+        ax.set_xlabel('x, km')
+        ax.set_ylabel('y, km')
+        ax.set_zlabel('z, km')
+    # plot trajectory
+    ax.plot(xs, ys, zs, linewidth=lw_traj, c=c_traj)
+    ax.scatter(xs[0], ys[0], zs[0], marker="x", c="r")
+    ax.scatter(xs[-1], ys[-1], zs[-1], marker="*", c="g")
+    return ax
+
+
+
