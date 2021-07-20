@@ -25,7 +25,7 @@ This generates the following:
   <img src="./examples/plot3d_example.png" width="550" title="hover text">
 </p>
 
-The above function returns `ax`, which is an `Axes3DSubplot` object. As such, the plot may be modified or more elements may be appended just as one would do with regular `matplotlib`
+The above function returns `ax`, which is an `Axes3DSubplot` object. As such, the plot may be modified or more elements may be appended just as one would do with regular `matplotlib`: 
 
 ```python
 ax.set_xlabel('x, km')
