@@ -20,16 +20,17 @@ if __name__=="__main__":
 	fig = plt.figure()
 	ax = fig.add_subplot(projection='3d')
 
-	# create plot with equl axis via boxing
-	xlims = [-800.0, 800.0]
-	ylims = [-800.0, 800.0]
-	zlims = [-250.0, 250.0]
-	trajplotlib.set_equal_axis(ax, xlims, ylims, zlims)
-
 	# plot trajectory
 	ax.plot(x, y, z)
 	ax.scatter(x[0], y[0], z[0], marker="x", c="r")
 	ax.scatter(x[-1], y[-1], z[-1], marker="*", c="g")
+
+	# create plot with equl axis via boxing
+	xlims = [min(x), max(x)]
+	ylims = [min(y), max(y)]
+	zlims = [min(z), max(z)]
+	trajplotlib.set_equal_axis(ax, xlims, ylims, zlims)
+	
 	# reference sphere
 	trajplotlib.plot_sphere_wireframe(ax, radius=230.0, color="k", linewidth=0.5)
 	# labels
