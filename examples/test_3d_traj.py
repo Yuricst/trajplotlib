@@ -17,7 +17,7 @@ if __name__=="__main__":
 	zs = data[:, 2]
 
 	# create plot
-	ax = trajplotlib.quickplot3(xs,ys,zs, r0=184.0)
+	ax = trajplotlib.quickplot3(xs,ys,zs, radius=184.0)
 
 	# labels
 	ax.set_xlabel('x, km')
