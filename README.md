@@ -13,11 +13,11 @@ import trajplotlib
 # compute/load data for xs, ys, zs
 
 # create plot
-ax = trajplotlib.quickplot3(xs,ys,zs, r0=184.0)
+ax = trajplotlib.quickplot3(xs, ys, zs, radius=184.0)
 plt.show()
 ```
 
-In the above, `xs`, `ys`, and `zs` are arrays of the trajectory coordinates, and `r0` is an optional value for plotting a sphere of radius `r0`. 
+In the above, `xs`, `ys`, and `zs` are arrays of the trajectory coordinates, and `radius` is an optional value for plotting a sphere of radius `radius`. 
 
 This generates the following: 
 
