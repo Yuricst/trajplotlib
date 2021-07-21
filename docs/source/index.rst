@@ -8,12 +8,18 @@ Welcome to trajplotlib's documentation!
 
 ``trajplotlib`` is a collection of helper functions that support your day-to-day trajectory plotting needs by wrapping ``matplotlib``. 
 
+.. image:: ../../examples/plot3d_example.png
+  :width: 400
+  :align: center
+  :alt: 3D quick trajectory plot example
+
+
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
    tutorial
-
+   api
 
 
 Indices and tables
