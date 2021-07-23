@@ -6,7 +6,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-def set_equal_axis(ax, xlims, ylims, zlims):
+def set_equal_axis(ax, xlims, ylims, zlims, dim3=True):
     """Helper function to set equal axis
     
     Args:
@@ -14,6 +14,7 @@ def set_equal_axis(ax, xlims, ylims, zlims):
         xlims (list): 2-element list containing min and max value of x
         ylims (list): 2-element list containing min and max value of y
         zlims (list): 2-element list containing min and max value of z
+        dim3 (bool): whether to also set z-limits (True for 3D plots)
     """
     # compute max required range
     max_range = np.array([max(xlims)-min(xlims), max(ylims)-min(ylims), max(zlims)-min(zlims)]).max() / 2.0
@@ -24,7 +25,8 @@ def set_equal_axis(ax, xlims, ylims, zlims):
     # set limits to axis
     ax.set_xlim(mid_x - max_range, mid_x + max_range)
     ax.set_ylim(mid_y - max_range, mid_y + max_range)
-    ax.set_zlim(mid_z - max_range, mid_z + max_range)
+    if dim3==True:
+        ax.set_zlim(mid_z - max_range, mid_z + max_range)
     return
 
 
@@ -116,7 +118,7 @@ def quickplot3(xs, ys, zs, ax=None, n_figsize=5,
         radius: float=None, center=None,
         scatter_start=True, marker_start="x", c_start="r", 
         scatter_end=True, marker_end="*", c_end="g"):
-    """Plot trajectory around body. 
+    """Plot 3D trajectory around body. 
     If `ax` is not provided, a new `matplotlib` trajectory is initialized. 
     If `ax` is provided, the trajectory is appended. 
     
@@ -151,9 +153,9 @@ def quickplot3(xs, ys, zs, ax=None, n_figsize=5,
     # plot trajectory
     ax.plot(xs, ys, zs, linewidth=lw_traj, c=c_traj)
     # scatter at the beginning/end of trajectory
-    if scatter_start is True:
+    if (scatter_start is True) and (marker_start is not None):
         ax.scatter(xs[0], ys[0], zs[0], marker=marker_start, c=c_start)
-    if scatter_end is True:
+    if (scatter_end is True) and (marker_end is not None):
         ax.scatter(xs[-1], ys[-1], zs[-1], marker=marker_end, c=c_end)
     # return Axes3DSubplot object
     return ax
