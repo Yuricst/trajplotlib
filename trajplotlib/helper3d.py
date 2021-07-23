@@ -155,9 +155,9 @@ def quickplot3(xs, ys, zs, ax=None, n_figsize=5, scale=1.0,
     # plot trajectory
     ax.plot(xs, ys, zs, linewidth=lw_traj, c=c_traj)
     # scatter at the beginning/end of trajectory
-    if (scatter_start is True) and (marker_start is not None):
+    if scatter_end is True:
         ax.scatter(xs[0], ys[0], zs[0], marker=marker_start, c=c_start)
-    if (scatter_end is True) and (marker_end is not None):
+    if scatter_end is True:
         ax.scatter(xs[-1], ys[-1], zs[-1], marker=marker_end, c=c_end)
     # return Axes3DSubplot object
     return ax
