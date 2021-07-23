@@ -18,7 +18,7 @@ Welcome to trajplotlib's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-   tutorial
+   tutorials
    api
 
 
