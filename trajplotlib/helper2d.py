@@ -41,10 +41,10 @@ def quickplot2(xs, ys, ax=None, n_figsize=5, scale=1.0,
             NOT_IMPLEMENTED_ERROR = 0
             #plot_sphere_wireframe(ax, radius, center=center, color="k", linewidth=0.5)
         # equal size grid
-        xlims = [scale*min(xs), scale*max(xs)]
-        ylims = [scale*min(ys), scale*max(ys)]
-        zlims = [scale*min(ys), scale*max(ys)]  # place-holder
-        set_equal_axis(ax, xlims, ylims, zlims, dim3=False)
+        xlims = [scalemin(xs), max(xs)]
+        ylims = [min(ys), max(ys)]
+        zlims = [min(ys), max(ys)]  # place-holder
+        set_equal_axis(ax, xlims, ylims, zlims, scale, dim3=False)
     # plot trajectory
     ax.plot(xs, ys, linewidth=lw_traj, c=c_traj)
     # scatter at the beginning/end of trajectory

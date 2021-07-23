@@ -6,7 +6,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-def set_equal_axis(ax, xlims, ylims, zlims, dim3=True):
+def set_equal_axis(ax, xlims, ylims, zlims, scale=1.0, dim3=True):
     """Helper function to set equal axis
     
     Args:
@@ -14,6 +14,7 @@ def set_equal_axis(ax, xlims, ylims, zlims, dim3=True):
         xlims (list): 2-element list containing min and max value of x
         ylims (list): 2-element list containing min and max value of y
         zlims (list): 2-element list containing min and max value of z
+        scale (float): scaling factor along x,y,z
         dim3 (bool): whether to also set z-limits (True for 3D plots)
     """
     # compute max required range
@@ -23,10 +24,10 @@ def set_equal_axis(ax, xlims, ylims, zlims, dim3=True):
     mid_y = (max(ylims) + min(ylims)) * 0.5
     mid_z = (max(zlims) + min(zlims)) * 0.5
     # set limits to axis
-    ax.set_xlim(mid_x - max_range, mid_x + max_range)
-    ax.set_ylim(mid_y - max_range, mid_y + max_range)
+    ax.set_xlim(mid_x - max_range*scale, mid_x + max_range*scale)
+    ax.set_ylim(mid_y - max_range*scale, mid_y + max_range*scale)
     if dim3==True:
-        ax.set_zlim(mid_z - max_range, mid_z + max_range)
+        ax.set_zlim(mid_z - max_range*scale, mid_z + max_range*scale)
     return
 
 
@@ -128,7 +129,7 @@ def quickplot3(xs, ys, zs, ax=None, n_figsize=5, scale=1.0,
         zs (ndarray): z-coordinates of trajectory
         ax (Axes3DSubplot): matplotlib 3D axis, created by `ax = fig.add_subplot(projection='3d')`. If set to None, new set of axis is created. 
         n_figsize (int): fig_size is set to (n_figsize, n_figsize)
-        scale (float): scaling factor along x,y,z direction
+        scale (float): scaling factor along x,y,z
         lw_traj (float): linewidth for trajectory
         c_traj (str): color for trajectory
         radius (float): radius of sphere at the center
@@ -147,10 +148,10 @@ def quickplot3(xs, ys, zs, ax=None, n_figsize=5, scale=1.0,
         if radius is not None:
             plot_sphere_wireframe(ax, radius, center=center, color="k", linewidth=0.5)
         # equal size grid
-        xlims = [scale*min(xs), scale*max(xs)]
-        ylims = [scale*min(ys), scale*max(ys)]
-        zlims = [scale*min(zs), scale*max(zs)]
-        set_equal_axis(ax, xlims, ylims, zlims)
+        xlims = [min(xs), max(xs)]
+        ylims = [min(ys), max(ys)]
+        zlims = [min(zs), max(zs)]
+        set_equal_axis(ax, xlims, ylims, zlims, scale)
     # plot trajectory
     ax.plot(xs, ys, zs, linewidth=lw_traj, c=c_traj)
     # scatter at the beginning/end of trajectory
