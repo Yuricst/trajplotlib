@@ -41,7 +41,7 @@ def quickplot2(xs, ys, ax=None, n_figsize=5, scale=1.0,
             NOT_IMPLEMENTED_ERROR = 0
             #plot_sphere_wireframe(ax, radius, center=center, color="k", linewidth=0.5)
         # equal size grid
-        xlims = [scalemin(xs), max(xs)]
+        xlims = [min(xs), max(xs)]
         ylims = [min(ys), max(ys)]
         zlims = [min(ys), max(ys)]  # place-holder
         set_equal_axis(ax, xlims, ylims, zlims, scale, dim3=False)
