@@ -1,8 +1,6 @@
 # trajplotlib
 matplotlib extension functions to plot trajectories
 
-[Read the docs!](https://trajplotlib.readthedocs.io/en/latest/)
-
 [![Documentation Status](https://readthedocs.org/projects/trajplotlib/badge/?version=latest)](https://trajplotlib.readthedocs.io/en/latest/?badge=latest)
 
 ### 3D trajectory with equal size axes
