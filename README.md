@@ -3,6 +3,8 @@ matplotlib extension functions to plot trajectories
 
 [![Documentation Status](https://readthedocs.org/projects/trajplotlib/badge/?version=latest)](https://trajplotlib.readthedocs.io/en/latest/?badge=latest)
 
+Dependencies: Python>=3.7, Matplotlib, numpy
+
 ### 3D trajectory with equal size axes
 
 To generate a quick 3D trajectory plot with equal-axis is a one-liner: 
