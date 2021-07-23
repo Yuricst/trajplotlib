@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 
 from .helper3d import set_equal_axis
 
-def quickplot2(xs, ys, ax=None, n_figsize=5,
+def quickplot2(xs, ys, ax=None, n_figsize=5, scale=1.0,
         lw_traj=0.75, c_traj="navy", 
         radius: float=None, center=None,
         scatter_start=True, marker_start="x", c_start="r", 
@@ -21,6 +21,7 @@ def quickplot2(xs, ys, ax=None, n_figsize=5,
         ys (ndarray): y-coordinates of trajectory
         ax (Axes3DSubplot): matplotlib 3D axis, created by `ax = fig.add_subplot(projection='3d')`. If set to None, new set of axis is created. 
         n_figsize (int): fig_size is set to (n_figsize, n_figsize)
+        scale (float): scaling factor along x,y,z direction
         lw_traj (float): linewidth for trajectory
         c_traj (str): color for trajectory
         radius (float): radius of sphere at the center
@@ -40,9 +41,9 @@ def quickplot2(xs, ys, ax=None, n_figsize=5,
             NOT_IMPLEMENTED_ERROR = 0
             #plot_sphere_wireframe(ax, radius, center=center, color="k", linewidth=0.5)
         # equal size grid
-        xlims = [min(xs), max(xs)]
-        ylims = [min(ys), max(ys)]
-        zlims = [min(ys), max(ys)]  # place-holder
+        xlims = [scale*min(xs), scale*max(xs)]
+        ylims = [scale*min(ys), scale*max(ys)]
+        zlims = [scale*min(ys), scale*max(ys)]  # place-holder
         set_equal_axis(ax, xlims, ylims, zlims, dim3=False)
     # plot trajectory
     ax.plot(xs, ys, linewidth=lw_traj, c=c_traj)

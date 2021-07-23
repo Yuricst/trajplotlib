@@ -113,7 +113,7 @@ def plot_ellipsoid_wireframe(ax, rx, ry, rz, center=None, color="k", linewidth=0
     return
 
 
-def quickplot3(xs, ys, zs, ax=None, n_figsize=5,
+def quickplot3(xs, ys, zs, ax=None, n_figsize=5, scale=1.0,
         lw_traj=0.75, c_traj="navy", 
         radius: float=None, center=None,
         scatter_start=True, marker_start="x", c_start="r", 
@@ -128,6 +128,7 @@ def quickplot3(xs, ys, zs, ax=None, n_figsize=5,
         zs (ndarray): z-coordinates of trajectory
         ax (Axes3DSubplot): matplotlib 3D axis, created by `ax = fig.add_subplot(projection='3d')`. If set to None, new set of axis is created. 
         n_figsize (int): fig_size is set to (n_figsize, n_figsize)
+        scale (float): scaling factor along x,y,z direction
         lw_traj (float): linewidth for trajectory
         c_traj (str): color for trajectory
         radius (float): radius of sphere at the center
@@ -146,9 +147,9 @@ def quickplot3(xs, ys, zs, ax=None, n_figsize=5,
         if radius is not None:
             plot_sphere_wireframe(ax, radius, center=center, color="k", linewidth=0.5)
         # equal size grid
-        xlims = [min(xs), max(xs)]
-        ylims = [min(ys), max(ys)]
-        zlims = [min(zs), max(zs)]
+        xlims = [scale*min(xs), scale*max(xs)]
+        ylims = [scale*min(ys), scale*max(ys)]
+        zlims = [scale*min(zs), scale*max(zs)]
         set_equal_axis(ax, xlims, ylims, zlims)
     # plot trajectory
     ax.plot(xs, ys, zs, linewidth=lw_traj, c=c_traj)
