@@ -46,12 +46,12 @@ def quickplot2(xs, ys, ax=None, n_figsize=5, scale=1.0,
         zlims = [min(ys), max(ys)]  # place-holder
         set_equal_axis(ax, xlims, ylims, zlims, scale, dim3=False)
     # plot trajectory
-    ax.plot(xs, ys, linewidth=lw_traj, c=c_traj)
+    ax.plot(xs, ys, linewidth=lw_traj, c=c_traj, zorder=1)
     # scatter at the beginning/end of trajectory
     if scatter_start is True:
-        ax.scatter(xs[0], ys[0], marker=marker_start, c=c_start)
+        ax.scatter(xs[0], ys[0], marker=marker_start, c=c_start, zorder=2)
     if scatter_end is True:
-        ax.scatter(xs[-1], ys[-1], marker=marker_end, c=c_end)
+        ax.scatter(xs[-1], ys[-1], marker=marker_end, c=c_end, zorder=2)
     # return Axes3DSubplot object
     return ax
 
