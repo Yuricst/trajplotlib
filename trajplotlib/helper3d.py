@@ -24,6 +24,8 @@ def set_equal_axis(ax, xlims, ylims, zlims, scale=1.0, dim3=True):
     mid_y = (max(ylims) + min(ylims)) * 0.5
     mid_z = (max(zlims) + min(zlims)) * 0.5
     # set limits to axis
+    if dim3==True:
+        ax.set_box_aspect((max_range, max_range, max_range))
     ax.set_xlim(mid_x - max_range*scale, mid_x + max_range*scale)
     ax.set_ylim(mid_y - max_range*scale, mid_y + max_range*scale)
     if dim3==True:
