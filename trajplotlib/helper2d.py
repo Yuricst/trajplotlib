@@ -45,6 +45,8 @@ def quickplot2(xs, ys, ax=None, n_figsize=5, scale=1.0,
         ylims = [min(ys), max(ys)]
         zlims = [min(ys), max(ys)]  # place-holder
         set_equal_axis(ax, xlims, ylims, zlims, scale, dim3=False)
+    else:
+        fig = None
     # plot trajectory
     ax.plot(xs, ys, linewidth=lw_traj, c=c_traj, zorder=1)
     # scatter at the beginning/end of trajectory
@@ -53,6 +55,6 @@ def quickplot2(xs, ys, ax=None, n_figsize=5, scale=1.0,
     if scatter_end is True:
         ax.scatter(xs[-1], ys[-1], marker=marker_end, c=c_end, zorder=2)
     # return Axes3DSubplot object
-    return ax
+    return fig, ax
 
 

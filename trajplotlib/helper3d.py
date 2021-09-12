@@ -139,7 +139,9 @@ def quickplot3(xs, ys, zs, ax=None, n_figsize=5, scale=1.0,
         lw_traj=0.75, c_traj="navy", 
         radius: float=None, center=None,
         scatter_start=True, marker_start="x", c_start="r", 
-        scatter_end=True, marker_end="*", c_end="g"):
+        scatter_end=True, marker_end="*", c_end="g",
+        background=False,
+        facecolor=None):
     """Plot 3D trajectory around body. 
     If `ax` is not provided, a new `matplotlib` trajectory is initialized. 
     If `ax` is provided, the trajectory is appended. 
@@ -161,6 +163,7 @@ def quickplot3(xs, ys, zs, ax=None, n_figsize=5, scale=1.0,
         scatter_end (bool): whether to plot marker at the end of trajectory
         marker_end (str): marker at the end of trajectory
         c_end (str): marker color at the end of trajectory
+        background (bool): whether to plot gray box at the background
     """
     if ax is None:
         fig = plt.figure(figsize=(n_figsize,n_figsize))
@@ -173,6 +176,8 @@ def quickplot3(xs, ys, zs, ax=None, n_figsize=5, scale=1.0,
         ylims = [min(ys), max(ys)]
         zlims = [min(zs), max(zs)]
         set_equal_axis(ax, xlims, ylims, zlims, scale)
+    else:
+        fig = None
     # plot trajectory
     ax.plot(xs, ys, zs, linewidth=lw_traj, c=c_traj)
     # scatter at the beginning/end of trajectory
@@ -180,8 +185,16 @@ def quickplot3(xs, ys, zs, ax=None, n_figsize=5, scale=1.0,
         ax.scatter(xs[0], ys[0], zs[0], marker=marker_start, c=c_start)
     if scatter_end is True:
         ax.scatter(xs[-1], ys[-1], zs[-1], marker=marker_end, c=c_end)
+    # turn off background
+    if background is False:
+        ax.w_xaxis.set_pane_color((1.0, 1.0, 1.0, 0.0))
+        ax.w_yaxis.set_pane_color((1.0, 1.0, 1.0, 0.0))
+        ax.w_zaxis.set_pane_color((1.0, 1.0, 1.0, 0.0))
+    if facecolor is not None:
+        ax.set_facecolor(facecolor)
+        fig.set_facecolor(facecolor)
     # return Axes3DSubplot object
-    return ax
+    return fig, ax
 
 
 
