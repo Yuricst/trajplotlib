@@ -38,7 +38,7 @@ def quickplot2(xs, ys, ax=None, n_figsize=5, scale=1.0,
         ax = fig.add_subplot()
         # reference sphere around asteroid
         if radius is not None:
-            x_circle, y_circle = get_circle_coordinates(r0, center)
+            x_circle, y_circle = get_circle_coordinates(radius, center)
             ax.plot(x_circle, y_circle, c="k", linewidth=0.5)
         # equal size grid
         xlims = [min(xs), max(xs)]
