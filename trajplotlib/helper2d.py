@@ -58,3 +58,19 @@ def quickplot2(xs, ys, ax=None, n_figsize=5, scale=1.0,
     return fig, ax
 
 
+def get_circle_coordinates(radius, center=None, n=50):
+    """Get x,y,z coordinates for circle
+    
+    Args:
+        radius (float): radius
+        center (list): x,y,z coordinates of center, if None set to [0.0, 0.0]
+    """
+    # check if center is provided
+    if center is None:
+        center = [0.0, 0.0]
+    thetas = np.linspace(0, 2*np.pi, n)
+    x_circle, y_circle = [], []
+    for theta in thetas:
+        x_circle.append(center[0] + radius*np.cos(theta))
+        y_circle.append(center[1] + radius*np.sin(theta))
+    return x_circle, y_circle
