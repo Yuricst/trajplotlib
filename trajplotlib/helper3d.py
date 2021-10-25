@@ -137,7 +137,7 @@ def plot_ellipsoid_wireframe(ax, rx, ry, rz, center=None, color="k", linewidth=0
 
 def quickplot3(xs, ys, zs, ax=None, n_figsize=5, scale=1.0,
         lw_traj=0.75, c_traj="navy", 
-        radius: float=None, center=None,
+        radius: float=None, center=None, label=None,
         scatter_start=True, marker_start="x", c_start="r", 
         scatter_end=True, marker_end="*", c_end="g",
         background=False,
@@ -179,7 +179,7 @@ def quickplot3(xs, ys, zs, ax=None, n_figsize=5, scale=1.0,
     else:
         fig = None
     # plot trajectory
-    ax.plot(xs, ys, zs, linewidth=lw_traj, c=c_traj)
+    ax.plot(xs, ys, zs, linewidth=lw_traj, c=c_traj, label=label)
     # scatter at the beginning/end of trajectory
     if scatter_end is True:
         ax.scatter(xs[0], ys[0], zs[0], marker=marker_start, c=c_start)
