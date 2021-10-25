@@ -16,7 +16,7 @@ import trajplotlib
 # compute/load data for xs, ys, zs
 
 # create plot
-ax = trajplotlib.quickplot3(xs, ys, zs, radius=184.0)
+fig, ax = trajplotlib.quickplot3(xs, ys, zs, radius=184.0)
 plt.show()
 ```
 
