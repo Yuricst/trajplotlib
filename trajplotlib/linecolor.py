@@ -4,6 +4,8 @@ Helper for line-color for trajectory plotting
 
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.collections import LineCollection
+import numbers
 
 
 def get_lc_traj_singleColor(xs, ys, cs, vmin, vmax, cmap, lw=0.8):
@@ -27,7 +29,7 @@ def get_lc_traj_singleColor(xs, ys, cs, vmin, vmax, cmap, lw=0.8):
         (obj): line collection object
     """
     # check if cs is a float, and if it is convert it to an array
-    if isinstance(cs, Real) == True:
+    if isinstance(cs, numbers.Real) == True:
     	cs = cs * np.ones((len(xs),))
 
     # generate segments
