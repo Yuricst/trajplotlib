@@ -1,5 +1,5 @@
 """
-Example 3D trajectory
+Example 3D trajectory animated
 """
 
 import matplotlib.pyplot as plt
@@ -15,9 +15,10 @@ if __name__=="__main__":
 	xs = data[:, 0]
 	ys = data[:, 1]
 	zs = data[:, 2]
+	ts = np.linspace(0.0, 1.0, len(data[:, 2]))  # fictitious time-stamp data
 
 	# create plot
-	fig, ax = trajplotlib.quickplot3(xs,ys,zs, radius=184.0)
+	fig, ax, anis = trajplotlib.animate_trajectory_3d(xs,ys,zs,ts)
 
 	# labels
 	ax.set_xlabel('x, km')

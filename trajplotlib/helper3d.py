@@ -4,6 +4,8 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib.animation as animation
+from scipy.interpolate import CubicSpline
 
 
 def set_equal_axis(ax, xlims, ylims, zlims, scale=1.0, dim3=True):
@@ -197,4 +199,131 @@ def quickplot3(xs, ys, zs, ax=None, n_figsize=5, scale=1.0,
     return fig, ax
 
 
+def animate_trajectory_3d(
+        xs, 
+        ys, 
+        zs, 
+        times, 
+        nt=100, 
+        multiple_traj=False, 
+        scale=1.2, 
+        fig=None, 
+        filename=None, 
+        interval=20, 
+        repeat_delay=0, 
+        fps=20, 
+        lw_traj=0.5, 
+        c_traj='navy'
+    ):
+    """Animate trajectory in 3D using `matplotlib.animation.FuncAnimation`
 
+    Args:
+        xs (lst): list or list of multiple trajectories' list of x-coordinates
+        ys (lst): list or list of multiple trajectories' list of y-coordinates
+        zs (lst): list or list of multiple trajectories' list of z-coordinates
+        times (lst): list of time-stamps corresponding to states xs, ys, zs
+        nt (int): number of steps to use for interpolating and creating animation
+        multiple_traj (bool): whether xs,ys,zs are lists (False) or lists of lists (True)
+        scale (float): scaling for setting limits on axis
+        fig (matplot): if previous figure has been created
+        filename (str): FIXME!! saving gif file, not supported for multiple animations
+        
+    Returns:
+        (tuple): fig, ax, list of animations
+    """
+    assert len(xs) == len(ys) == len(zs) == len(times), "xs, ys, zs, and times must be of equal length"
+
+    # clean up data if time is not strictly increasing
+    ordered_time = all(i < j for i, j in zip(times, times[1:]))
+    if ordered_time == False:
+        t_ordered, xs_ordered, ys_ordered, zs_ordered = [], [], [], []
+        if multiple_traj is False:
+            assert len(times) == len(xs) == len(ys) == len(zs)
+            for j in range(len(times)-1):
+                if times[j] < times[j+1]:  # if strictly less than next time-step
+                    t_ordered.append(times[j])
+                    xs_ordered.append( xs[j] )
+                    ys_ordered.append( ys[j] )
+                    zs_ordered.append( zs[j] )
+        else:
+            for i_traj in range(len(xs)):
+                assert len(times) == len(xs[i_traj]) == len(ys[i_traj]) == len(zs[i_traj])
+                xi_ordered, yi_ordered, zi_ordered = [], [], []
+                for j in range(len(times)-1):
+                    if times[j] < times[j+1]:  # if strictly less than next time-step
+                        if i_traj == 0:
+                            t_ordered.append(times[j])
+                        xi_ordered.append( xs[i_traj][j] )
+                        yi_ordered.append( ys[i_traj][j] )
+                        zi_ordered.append( zs[i_traj][j] )
+                xs_ordered.append( xi_ordered )
+                ys_ordered.append( yi_ordered )
+                zs_ordered.append( zi_ordered )
+
+    else:
+        t_ordered = times
+        xs_ordered = xs
+        ys_ordered = ys
+        zs_ordered = zs
+
+    # create inerpolation
+    if multiple_traj is False:
+        cxs = CubicSpline(t_ordered, xs_ordered)
+        cys = CubicSpline(t_ordered, ys_ordered)
+        czs = CubicSpline(t_ordered, zs_ordered)
+        t_interp = np.linspace(t_ordered[0], t_ordered[-1], nt)
+        xs_interp = cxs(t_interp)
+        ys_interp = cys(t_interp)
+        zs_interp = czs(t_interp)
+
+    else:
+        xs_interp, ys_interp, zs_interp = [], [], []
+        for i_traj in range(len(xs_ordered)):
+            cxs = CubicSpline(t_ordered, xs_ordered[i_traj])
+            cys = CubicSpline(t_ordered, ys_ordered[i_traj])
+            czs = CubicSpline(t_ordered, zs_ordered[i_traj])
+            t_interp = np.linspace(times[0], times[-1], nt)
+            xs_interp.append( cxs(t_interp) )
+            ys_interp.append( cys(t_interp) )
+            zs_interp.append( czs(t_interp) )
+
+    # prep base figure if none is provided
+    if fig is None:
+        fig = plt.figure()
+        ax = fig.add_subplot(111, projection='3d')
+        # set equal axis
+        if multiple_traj is False:
+            xlims = [min(xs_interp), max(xs_interp)]
+            ylims = [min(ys_interp), max(ys_interp)]
+            zlims = [min(zs_interp), max(zs_interp)]
+        else:
+            xlims = [min(xs_interp[0]), max(xs_interp[0])]
+            ylims = [min(ys_interp[0]), max(ys_interp[0])]
+            zlims = [min(zs_interp[0]), max(zs_interp[0])]
+        set_equal_axis(ax, xlims, ylims, zlims, scale=scale, dim3=True)
+
+    # prep drawing funciton
+    def update_frame(num, dataSet, line):
+        # NOTE: there is no .set_data() for 3 dim data...
+        line.set_data(dataSet[0:2, :num])    
+        line.set_3d_properties(dataSet[2, :num])    
+        return line
+
+    if multiple_traj is False:
+        dataSet = np.array([xs_interp, ys_interp, zs_interp])
+        # NOTE: Can't pass empty arrays into 3d version of plot()
+        line = plt.plot(dataSet[0], dataSet[1], dataSet[2], lw=lw_traj, c=c_traj)[0] # For line plot
+        anis = animation.FuncAnimation(fig, update_frame, frames=len(t_interp), fargs=(dataSet,line), interval=interval, repeat=True, repeat_delay=repeat_delay, blit=False)
+
+    else:   # multiple trajectory (multiple_traj==True case)
+        anis = []
+        for i_traj in range(len(xs_interp)):
+            dataSet = np.array([xs_interp[i_traj], ys_interp[i_traj], zs_interp[i_traj]])
+            # NOTE: Can't pass empty arrays into 3d version of plot()
+            line = plt.plot(dataSet[0], dataSet[1], dataSet[2], lw=lw_traj, c=c_traj[i_traj])[0] # For line plot
+            anis.append( animation.FuncAnimation(fig, update_frame, frames=len(t_interp), fargs=(dataSet,line), interval=interval, repeat=True, repeat_delay=repeat_delay, blit=False)
+            )
+
+    if filename is not None:
+        ani.save(fn+'.gif',writer='imagemagick',fps=fps)
+    return fig, ax, anis
