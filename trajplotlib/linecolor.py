@@ -5,6 +5,7 @@ Helper for line-color for trajectory plotting
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.collections import LineCollection
+from matplotlib import cm
 import numbers
 
 
@@ -44,3 +45,15 @@ def get_lc_traj_singleColor(xs, ys, cs, vmin, vmax, cmap, lw=0.8):
     lc.set_array( plt_color )
     lc.set_linewidth( lw )
     return lc
+
+
+def cycle_color(n):
+    """Get cyclic color in terms of matplotlib.cm.rainbow
+
+    Args:
+        n (int): number of colors to generate
+
+    Returns:
+        (list): list of colors to be used in plots
+    """
+    return cm.rainbow(np.linspace(0, 1, n))

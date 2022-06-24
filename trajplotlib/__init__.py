@@ -13,4 +13,4 @@ from .helper3d import (
 	get_ellipsoid_coordinates,
 	animate_trajectory_3d
 )
-from .linecolor import get_lc_traj_singleColor
+from .linecolor import get_lc_traj_singleColor, cycle_color
